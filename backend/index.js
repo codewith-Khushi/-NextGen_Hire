@@ -22,8 +22,8 @@ app.use(cookieParser());
 // 'credentials: true' allows sending cookies/token between frontend & backend
 const allowedOrigins = [
   "http://localhost:5173", // local dev
-  "https://next-gen-hire-neon.vercel.app", // current live frontend (Vercel)
-  "https://nextgen-hire-p5q4.onrender.com" // backend domain (Render)
+  "https://next-gen-hire-fawn.vercel.app/", // current live frontend (Vercel)
+  "https://nextgen-hire-ke5j.onrender.com" // backend domain (Render)
 ];
 
 const corsOptions = {
