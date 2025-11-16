@@ -12,18 +12,16 @@ dotenv.config();
 
 const app = express();
 
-// ✅ Middleware setup
+// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// ✅ Updated CORS configuration
-// Added all allowed frontend domains to avoid CORS errors
-// 'credentials: true' allows sending cookies/token between frontend & backend
+// ===== CORS FIXED =====
 const allowedOrigins = [
-  "http://localhost:5173", // local dev
-  "https://next-gen-hire-fawn.vercel.app/", // current live frontend (Vercel)
-  "https://nextgen-hire-ke5j.onrender.com" // backend domain (Render)
+  "http://localhost:5173",                   // Local frontend
+  "https://next-gen-hire-fawn.vercel.app",  // Vercel frontend (correct, NO slash)
+  "https://nextgen-hire-ke5j.onrender.com"  // Backend domain (Render)
 ];
 
 const corsOptions = {
@@ -40,20 +38,20 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+app.options("*", cors(corsOptions)); // Required for preflight requests (OPTIONS)
 
-// ✅ Root route (for Render health check or testing)
+// Root route (health check)
 app.get("/", (req, res) => {
   res.send("Backend is working fine 🚀");
 });
 
-// ✅ All main routes
+// Routes
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/company", companyRoute);
 app.use("/api/v1/job", jobRoute);
 app.use("/api/v1/application", applicationRoute);
 
-// ✅ Server start logic
-// Connected DB inside async block to ensure proper order
+// Start server
 const PORT = process.env.PORT || 3000;
 
 const startServer = async () => {
